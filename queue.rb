@@ -1,4 +1,8 @@
-# A queue requires enqueue, dequeue, peek, and size methods
+#
+# Created by Steve Petropulos.
+#
+# A queue requires enqueue, dequeue, peek, and size methods.
+#
 
 class Queue
   def initialize

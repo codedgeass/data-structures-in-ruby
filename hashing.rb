@@ -1,3 +1,8 @@
+#
+# Created by Steve Petropulos using the guide at:
+# https://blog.engineyard.com/2013/hash-lookup-in-ruby-why-is-it-so-fast.
+#
+
 HashEntry = Struct.new(:key, :value)
 
 class HashTable

@@ -1,4 +1,8 @@
+#
+# Created by Steve Petropulos.
+#
 # From a stack we need push, pop, peek, and size methods.
+#
 
 class Stack
   def initialize
