@@ -110,15 +110,15 @@ class BinarySearchTree
   
   def circumvent_node(data, parent, node)
     if node.lchild.nil? && node.rchild.nil?
-      set_child_reference_in_parent_to_nil(data, parent)
+      set_child_pointer_in_parent_to_nil(data, parent)
     elsif node.lchild && node.rchild.nil?
-      set_child_reference_in_parent_to_child_of_node(data, parent, node.lchild)
+      set_child_pointer_in_parent_to_child_of_node(data, parent, node.lchild)
       node.lchild.parent = parent
     elsif node.lchild.nil? && node.rchild
-      set_child_reference_in_parent_to_child_of_node(data, parent, node.rchild)
+      set_child_pointer_in_parent_to_child_of_node(data, parent, node.rchild)
       node.rchild.parent = parent
     elsif node.lchild && node.rchild  # Rotate tree to the right.
-      set_child_reference_in_parent_to_child_of_node(data, parent, node.lchild)
+      set_child_pointer_in_parent_to_child_of_node(data, parent, node.lchild)
       node.lchild.parent = parent
       merge_branches(node.lchild, node.rchild)
     end
@@ -132,7 +132,7 @@ class BinarySearchTree
     end
   end
   
-  def set_child_reference_in_parent_to_nil(data, parent)
+  def set_child_pointer_in_parent_to_nil(data, parent)
     if data < parent.data
       parent.lchild = nil
     else  # data > parent.data
@@ -140,7 +140,7 @@ class BinarySearchTree
     end
   end
   
-  def set_child_reference_in_parent_to_child_of_node(data, parent, child)
+  def set_child_pointer_in_parent_to_child_of_node(data, parent, child)
     if data < parent.data
       parent.lchild = child
     else  # data > parent.data
