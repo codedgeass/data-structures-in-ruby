@@ -78,17 +78,6 @@ class BinarySearchTree
     return inserted_node
   end
   
-  def traverse_recursively_and_delete(data, parent, current_node)
-    if current_node.nil?
-      return nil  # The data does not exist in the tree.
-    elsif data == current_node.data
-      circumvent_node(data, parent, current_node)
-      return current_node
-    else  # data < next_node.data || data > next_node.data
-      return traverse_recursively_and_delete( data, find_next_node(data, parent, current_node) )
-    end
-  end
-  
   def circumvent_root
     if @root.lchild.nil? && @root.rchild.nil?
       @root = nil
@@ -97,8 +86,18 @@ class BinarySearchTree
     elsif @root.lchild.nil? && @root.rchild
       @root = @root.rchild
     elsif @root.lchild && @root.rchild
-      merge_branches(@root.lchild, @root.rchild)
-      @root = @root.lchild
+      @root.data = find_largest_leaf(@root.lchild).data
+      traverse_recursively_and_delete(@root.data, @root, @root.lchild)
+    end
+  end
+  
+  def traverse_recursively_and_delete(data, parent, current_node)
+    if current_node.nil?
+      return nil  # The data does not exist in the tree.
+    elsif data == current_node.data
+      return circumvent_node(data, parent, current_node)
+    else  # data < next_node.data || data > next_node.data
+      return traverse_recursively_and_delete( data, current_node, find_next_node(data, current_node) )
     end
   end
   
@@ -110,9 +109,15 @@ class BinarySearchTree
     elsif node.lchild.nil? && node.rchild
       set_child_pointer_in_parent_to_child_of_node(data, parent, node.rchild)
     elsif node.lchild && node.rchild  # Rotate tree to the right.
-      set_child_pointer_in_parent_to_child_of_node(data, parent, node.lchild)
-      merge_branches(node.lchild, node.rchild)
+      node.data = find_largest_leaf(node.lchild).data
+      node = traverse_recursively_and_delete(node.data, node, node.lchild)
     end
+    node
+  end
+  
+  def find_largest_leaf(node)
+    return node if node.rchild.nil?
+    find_largest_leaf(node.rchild)
   end
   
   def find_next_node(data, node)
@@ -137,30 +142,6 @@ class BinarySearchTree
     else  # data > parent.data
       parent.rchild = child
     end
-  end
-  
-  def merge_branches(lchild, rchild)
-    largest_leaf = find_largest_leaf(lchild)
-    if largest_leaf.equal?(lchild)
-      return
-    else
-      smallest_leaf = find_smallest_leaf(rchild)
-      if smallest_leaf.equal?(rchild)
-        rchild.lchild = largest_leaf
-      else
-        smallest_leaf.lchild = largest_leaf
-      end
-    end
-  end
-  
-  def find_largest_leaf(node)
-    return node if node.rchild.nil?
-    find_largest_leaf(node.rchild)
-  end
-  
-  def find_smallest_leaf(node)
-    return node if node.lchild.nil?
-    find_smallest_leaf(node.lchild)
   end
   
   def traverse_recursively_and_search(data, current_node)
