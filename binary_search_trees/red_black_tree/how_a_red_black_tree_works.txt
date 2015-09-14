@@ -1,7 +1,25 @@
-The goal of a red black tree is to maintain a balanced binary search tree. This is achieved by adding a "color" to every node and declaring a series of constraints around these colors. The constraints are used to identify when and how the tree needs to be balanced. Balance is achieved by recoloring and rotating parts of the tree.
+#
+# Created by Steve Petropulos.
+#
+# A brief summary on how the mechanisms of a red-black tree come together to create a balanced binary search tree.
+#
 
-The two key constraints that maintain balance are every red node must only have black children and every path from the root to a leaf must have the same number of black nodes. This means that the tree will not be perfectly balanced. The longest branch would be one of alternating black and red nodes while the shortest branch would only contain black nodes. This creates a guarantee that the longest branch will be twice as long as the shortest which is usually acceptable. The search, insertion, and deletion asymptotic time complexities are all O(log N).
+The goal of a red black tree is to maintain a balanced binary search tree. This is achieved by adding a "color" to
+every node and declaring a series of constraints around these colors. The constraints are used to identify when and how
+the tree needs to be balanced. Balance is achieved by recoloring and rotating parts of the tree.
 
-When inserting a node, the tree needs to be balanced if the parent of the inserted node is red. This would violate the property of a red node only having black children and force the inserted node to be colored black. This in turn would create an extra black node on that branch that would violate the property that any path from the root to a leaf must contain the same number of black nodes. How the tree will be balanced is determined by the color of the inserted node's uncle. If the uncle is red we can simply color it black without fear of violating any of our constraints. If the uncle is black, a rotation is needed to maintain balance.
+So how do the colors help the tree remain balanced? There are two key color constraints that maintain the tree's
+balance; any other constraints serve to simplify algorithms that maintain these two. First, every red node must only
+have black children. Second, every path from the root to a leaf must have the same number of black nodes. This means
+that the tree will not be perfectly balanced. The longest possible branch would be one of alternating black and red
+nodes while the shortest possible branch would only contain black nodes. This creates a guarantee that the longest
+possible branch will be twice as long as the shortest possible, which is acceptable for msot use cases. By maintaining
+these color constraints, a tree can be created with search, insertion, and deletion asymptotic time complexities of
+O(log N).
 
-When deleting a node, the tree needs to be balanced if the node deleted is black. This creates one less black node on the current branch and will violate the property that any any path from the root to a leaf must contain the same number of black nodes. How the tree will be balanced is determined by the deleted node's parent and sibling.
+When modifying the tree, which happens when inserting or deleting a node, we need to respect the color constraints.
+Inserting or deleting a black node will violate a constraint. Appending a red node to another red node, or, deleting a
+black node that separates two red nodes will also violate a constraint. An interesting point to note is violating a
+color constraint does not always mean the tree is becoming unbalanced. Therefore, to maintain balance, additional
+processing is required beyond cases where actual rotations occur. This overhead exists, in part, due to the limitations
+of the red-black tree and the inherent difficulty in maintaining a balanced binary search tree.

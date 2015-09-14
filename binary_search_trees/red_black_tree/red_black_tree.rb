@@ -35,15 +35,6 @@ class Node
   def is_sentinel?
     false
   end
-  
-  def get_sibling(node)
-    parent = node.parent
-    if parent.lchild.equal?(node)
-      parent.rchild
-    else
-      parent.lchild
-    end
-  end
 end
 
 class RedBlackTree 
@@ -62,7 +53,7 @@ class RedBlackTree
   def search(data)
     return nil if @root.nil?
     node = find_node_with_data_or_final_position(data, @root)
-    data == node.data ? node : nil  # nil indicates the data does not exist in the tree.
+    data == node.data ? node : nil  # NIL indicates the data does not exist in the tree.
   end
   
   def insert(data)
@@ -177,7 +168,7 @@ class RedBlackTree
     end
   end
   
-  def rotate_left(node, parent, grandparent) # TODO: Make this so parent is the node.
+  def rotate_left(node, parent, grandparent)
     adopt_child(grandparent, node) if grandparent
     parent.parent = node
     parent.lchild ||= @@sentinel
@@ -204,7 +195,7 @@ class RedBlackTree
     end
   end
   
-  def rotate_right(node, parent, grandparent)  # TODO: Make this so parent is the node.
+  def rotate_right(node, parent, grandparent)
     adopt_child(grandparent, node) if grandparent
     parent.parent = node
     parent.rchild ||= @@sentinel
@@ -286,13 +277,15 @@ class RedBlackTree
   end
   
   def enforce_color_constraints_after_deletion_case2(node, direction)
-    if node.color == 0 && node.rchild.color == 0 && direction == 'left' && node.rchild.rchild.color == 0 && node.rchild.lchild.color == 0
+    if node.color == 0 && node.rchild.color == 0 && direction == 'left' && node.rchild.rchild.color == 0 &&
+       node.rchild.lchild.color == 0
       node.rchild.color = 1
       if !node.equal?(@root)
         direction = node.data <= node.parent.data ? 'left' : 'right'
         enforce_color_constraints_after_deletion_case1(node.parent, direction)
       end
-    elsif node.color == 0 && node.lchild.color == 0 && direction == 'right' && node.lchild.lchild.color == 0 && node.lchild.rchild.color == 0
+    elsif node.color == 0 && node.lchild.color == 0 && direction == 'right' && node.lchild.lchild.color == 0 &&
+          node.lchild.rchild.color == 0
       node.lchild.color = 1
       if !node.equal?(@root)
         direction = node.data <= node.parent.data ? 'left' : 'right'
@@ -304,10 +297,12 @@ class RedBlackTree
   end
   
   def enforce_color_constraints_after_deletion_case3(node, direction)
-    if node.color == 1 && node.rchild.color == 0 && direction == 'left' && node.rchild.rchild.color == 0 && node.rchild.lchild.color == 0  # FIXME Do we need to check if rchild is a sentinel?
+    if node.color == 1 && node.rchild.color == 0 && direction == 'left' && node.rchild.rchild.color == 0 &&
+       node.rchild.lchild.color == 0
       node.color = 0
       node.rchild.color = 1
-    elsif node.color == 1 && node.lchild.color == 0 && direction == 'right' && node.lchild.lchild.color == 0 && node.lchild.rchild.color == 0
+    elsif node.color == 1 && node.lchild.color == 0 && direction == 'right' && node.lchild.lchild.color == 0 &&
+          node.lchild.rchild.color == 0
       node.color = 0
       node.lchild.color = 1
     else
@@ -316,11 +311,13 @@ class RedBlackTree
   end
   
   def enforce_color_constraints_after_deletion_case4(node, direction)
-    if node.lchild.color == 0 && !node.lchild.is_sentinel? && node.lchild.rchild.color == 1 && node.lchild.lchild.color == 0 && direction == 'right'
+    if node.lchild.color == 0 && !node.lchild.is_sentinel? && node.lchild.rchild.color == 1 &&
+       node.lchild.lchild.color == 0 && direction == 'right'
       node.lchild.color = 1
       node.lchild.rchild.color = 0
       rotate_left(node.lchild.rchild, node.lchild, node)
-    elsif node.rchild.color == 0 && !node.rchild.is_sentinel? && node.rchild.lchild.color == 1 && node.rchild.rchild.color == 0 && direction == 'left'
+    elsif node.rchild.color == 0 && !node.rchild.is_sentinel? && node.rchild.lchild.color == 1 &&
+          node.rchild.rchild.color == 0 && direction == 'left'
       node.rchild.color = 1
       node.rchild.lchild.color = 0
       rotate_right(node.rchild.lchild, node.rchild, node)

@@ -417,7 +417,7 @@ describe RedBlackTree do
             expect(sibling.color).to eq 0
           end
           
-          it 'makes the subtree root has the same color as the old one' do
+          it 'makes the subtree root have the same color as the previous one' do
             expect(sibling_rchild.color).to eq 0
           end
         end
