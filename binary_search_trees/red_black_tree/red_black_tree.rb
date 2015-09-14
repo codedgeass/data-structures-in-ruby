@@ -8,6 +8,11 @@
 
 require 'singleton'
 
+
+################
+# THE SENTINEL #
+################
+
 class Sentinel
   include Singleton
   attr_reader :data, :color
@@ -20,6 +25,11 @@ class Sentinel
     true
   end
 end
+
+
+############
+# THE NODE #
+############
 
 class Node
   attr_accessor :data, :color, :parent, :lchild, :rchild
@@ -36,6 +46,11 @@ class Node
     false
   end
 end
+
+
+############
+# THE TREE #
+############
 
 class RedBlackTree 
   @@sentinel = Sentinel.instance
