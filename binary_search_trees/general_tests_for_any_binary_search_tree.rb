@@ -1,7 +1,7 @@
 #
 # Created by Steve Petropulos
 #
-# An Rspec test suite for general behaviors shared by all types of binary search trees.
+# An RSpec test suite for general behaviors shared by all types of binary search trees.
 # It is assumed when either a left or right tree rotation will suffice, a right rotation is performed.
 #
 

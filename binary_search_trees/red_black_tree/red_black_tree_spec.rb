@@ -1,7 +1,7 @@
 #
 # Created by Steve Petropulos.
 #
-# An Rspec test suite for a red-black tree.
+# An RSpec test suite for a red-black tree.
 # It is assumed when either a left or right tree rotation will suffice, a right rotation is performed.
 # A sentinel node is used to serve as the leaf for every branch in the tree.
 #

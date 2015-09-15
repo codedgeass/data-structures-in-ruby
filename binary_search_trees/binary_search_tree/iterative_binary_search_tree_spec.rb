@@ -1,7 +1,7 @@
 #
 # Created by Steve Petropulos.
 #
-# A test suite for an iterative implementation of a binary search tree.
+# An RSpec test suite for an iterative implementation of a binary search tree.
 # Tree rotations occur to the right.
 #
 
